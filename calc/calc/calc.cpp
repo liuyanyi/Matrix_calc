@@ -4,13 +4,26 @@
 void shuchu(float m[MAX][MAX], int hang, int lie)
 //输出矩阵函数，形参为二维数组，行数和列数
 {
-	int i, j, k;
+	int i, j, k,t;
 	for (i = 0, k = 0; i < hang; i++)	//循环
-		for (j = 0, printf("    | "); j < lie; j++)
+		for (j = 0,printf("    | "); j < lie; j++)
 		{
+			if (k == 0)
+			{
+				for (t = 0; t < lie; t++)
+					printf("       ");
+				printf(" |\n    | ");
+			}
 			printf("%6.2f ", m[i][j]);	//输出对应的值
 			k++;
-			if (k % lie == 0) printf(" |\n");
+			if (k % lie == 0)
+			{
+					printf(" |\n    | ");
+					for (t = 0; t < lie; t++)
+						printf("       ");
+					printf(" |\n");
+			}
+			
 			//列数判别，如果k为列数的倍数，则换行
 		}
 	printf("\n");
@@ -254,28 +267,25 @@ int main()
 		case 0:		//直接退出
 			j = 0; break;
 		case 1:
-			zhuanzhi();		//进入转置
-			j = jud(); break;
-			//进入结束判断部分，通过jud函数返回的值来选择退出或重新运行，下同
+			zhuanzhi();	break;
 		case 2:
-			hanglieshi(); 	//进入行列式部分
-			j = jud(); break;
+			hanglieshi(); break;
 		case 3:
-			multiply();		//进入矩阵乘法
-			j = jud(); break;
+			multiply();	break;
 		case 4:
-			cramer(); 		//进入方程组部分
-			j = jud(); break;
+			cramer(); break;
 		case 5:
-			neiji(); 		//进入内积部分
-			j = jud(); break;
+			neiji(); break;
 		case 6:
-			jiafa(); 		//进入加法部分
-			j = jud(); break;
-		default:
-			j = 1;			//其余即为输入错误，重新输入
-			printf("Error!重新选择\n");
-			break;
+			jiafa();break;
+		default: break;
+		}
+		if (input >= 0 && input <=6)
+			j = jud();
+		else
+		{
+			j = 1;
+			printf("输入有误，请重新输入\n");
 		}
 	} while (j);			//循环判断，如果j==1，即重新运行
 	system("pause");
