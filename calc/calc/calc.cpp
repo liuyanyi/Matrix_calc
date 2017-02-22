@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 10			//定义最大支持的阶数
+int choice = 0;
 struct Matrix	//矩阵结构体
 {
 	int row;
@@ -250,15 +251,18 @@ int jud(void)	//运行结束判断部分
 	int input;		//定义判断参数
 	do
 	{
-		printf("-------------\n");
-		printf(" 已运行完毕\n");
-		printf("1、重新运行\n");
-		printf("0、退出\n");
-		printf("-------------\n");
+		printf("    ----------------\n");
+		printf("     已运行完毕\n");
+		printf("     1、重新运行\n");
+		printf("     2、返回主菜单\n");
+		printf("     0、退出\n");
+		printf("    ----------------\n");
 		scanf_s("%d", &input);
 		switch (input)	//判断输入的值来返回不同的值
 		{
 		case 1:
+			return 2;
+		case 2:
 			return 1;
 		case 0:
 			return 0;
@@ -284,32 +288,33 @@ int main()
 		printf("         0、退出\n\n");
 		printf("    ------------------------------------\n\n");
 		scanf_s("%d", &input);
-		switch (input)		//判断输入来进入不同区块
-		{
-		case 0:		//直接退出
-			j = 0; break;
-		case 1:
-			zhuanzhi();	break;
-		case 2:
-			hanglieshi(); break;
-		case 3:
-			multiply();	break;
-		case 4:
-			cramer(); break;
-		case 5:
-			neiji(); break;
-		case 6:
-			jiafa();break;
-		default: break;
-		}
-		if (input >= 0 && input <=6)
-			j = jud();
-		else
-		{
-			j = 1;
-			printf("输入有误，请重新输入\n");
-		}
-	} while (j);			//循环判断，如果j==1，即重新运行
+		if (input == 0)break;
+		do {
+			switch (input)		//判断输入来进入不同区块
+			{
+			case 1:
+				zhuanzhi();	break;
+			case 2:
+				hanglieshi(); break;
+			case 3:
+				multiply();	break;
+			case 4:
+				cramer(); break;
+			case 5:
+				neiji(); break;
+			case 6:
+				jiafa(); break;
+			default: break;
+			}
+			if (input >= 0 && input <= 6)
+				j = jud();
+			else
+			{
+				j = 0;
+				printf("输入有误，请重新输入\n");
+			}
+		} while (j == 2);
+	} while (j == 1);			//循环判断，如果j==1，即重新运行
 	system("pause");
 	return 0;
 }
