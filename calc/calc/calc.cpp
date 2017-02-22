@@ -131,7 +131,7 @@ void jiafa(void)
 	p = &a[0];
 	printf("输入矩阵的行数、列数：\n");
 	scanf_s("%d%d", &p->row, &p->column);
-	for (p = p + 1, i = 0; i < 3; i++)
+	for (p = p + 1, i = 0; i < 2; i++, p++)
 	{
 		p->row = a[0].row;
 		p->column = a[0].column;
@@ -155,7 +155,7 @@ void jiafa(void)
 		for (j = 0; j < p->column; j++)
 			p->m[i][j] = n1*(p - 2)->m[i][j] + n2*(p - 1)->m[i][j];	//进行加法运算
 	printf("%3dA+%3dB = \n", n1, n2);
-	shuchu(p);
+	shuchu(&a[2]);
 }
 void multiply(void)		//矩阵乘法部分
 {
@@ -165,30 +165,30 @@ void multiply(void)		//矩阵乘法部分
 	struct Matrix *p;
 	do
 	{
-		for (i = 0, p = &a[0], ch = 'A'; i < 2; i++, ch++, p++)
+		for (i = 0, p = &a[0],ch = 'A'; i < 2; i++,p++, ch++)
 		{
 			printf("输入%c矩阵的行数、列数：\n", ch);
 			scanf_s("%d%d", &p->row, &p->column);
 		}
 		if (a[0].column != a[1].row) printf("A列数不等于B行数，请重新输入\n");
 	} while (a[0].column != a[1].row);
-	for (t = 0, p = &a[0], ch = 'A'; t < 2; t++, ch++, p++)
+	for (t = 0, p = &a[0], ch = 'A'; t < 2; t++,p++, ch++)
 	{
 		printf("输入%c矩阵：\n", ch);
 		for (i = 0; i < p->row; i++)
 			for (j = 0; j < p->column; j++)
 				scanf_s("%f", &p->m[i][j]);
 	}
-	p++;
+	p = &a[2];
 	p->row = a[0].row;
-	p->column = a[0].column;
+	p->column = a[1].column;
 	for (i = 0; i < p->row; i++)
 		for (j = 0; j < p->column; j++)
 			p->m[i][j] = 0;
 	for (i = 0; i < p->row; i++)
-		for (j = 0; j < (p-1)->column; j++)
-			for (k = 0; k < p->column; k++)
-				p->m[i][j] += (p - 2)->m[i][k] * (p - 1)->m[k][j];
+		for (j = 0; j < p->column; j++)
+			for (k = 0; k < (p - 2)->column; k++)
+				p->m[i][j] += a[0].m[i][k] * a[1].m[k][j];
 	printf("A*B=C\n");
 	for (i = 0, p = &a[0], ch = 'A'; i < 3; i++, p++, ch++)
 	{
